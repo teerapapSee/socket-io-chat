@@ -1,0 +1,47 @@
+<div class="container height100">
+    <div class="row height100">
+        <div class="col-12 pt-5 height100">
+            <div class="card h-90">
+                <div class="card-body h-100">
+                    <div class="row h-100">
+                        <div class="col-8 h-70 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body h-100 overflow-auto">
+                                    @for (item of massage; track $index) {
+                                        <div class="d-flex ">
+                                            <b class="me-2">{{item.name}} :</b>
+                                            <p>{{item.massage}}</p>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 h-70 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body h-100 overflow-auto">
+                                    <h4>Room : {{socketService.userRoom}}</h4>
+                                    @for (item of socketService.userInRoom; track $index) {
+                                        <h6>user : {{item.name}}</h6>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <form [formGroup]="chat">
+                                <input
+                                [ngClass]="{'form-control':true, 'mb-3':true,'invalid':chat.controls.massage.hasError('required') && chat.touched}"
+                                type="text" placeholder="...Massage" formControlName="massage">
+                                <button [disabled]="chat.valid==false" type="button" class="btn btn-success w-100 mb-3" (click)="sendMaessage()">Submit</button>
+                                <button type="button" class="btn btn-danger w-100" (click)="leaveRoom()">Leave</button>
+        
+                            </form>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>

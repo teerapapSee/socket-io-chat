@@ -1,0 +1,62 @@
+<div class="container">
+     <div class="row">
+      <div class="col-12">
+       <div class="card mt-5">
+        <div class="card-body">
+         <div class="row mb-3">
+          <div class="col-12">
+           <div class="col-12">
+            <div class="btn-group w-100" role="group">
+    
+             <button type="button"
+            [ngClass]="{
+             'btn':true,
+             'btn-outline-primary':true,
+             'active':selectType=='newRooms'
+             }"
+            (click)="selectType = 'newRooms'">New room</button>
+    
+             <button type="button"
+            [ngClass]="{
+             'btn':true,
+             'btn-outline-primary':true,
+             'active':selectType=='listRooms'
+             }"
+            (click)="selectType = 'listRooms'">Rooms list</button>
+    
+            </div>
+           </div>
+          </div>
+         </div>
+         @if(selectType=='newRooms'){
+          <form [formGroup]="newRooms" novalidate>
+           <input
+          [ngClass]="{'form-control':true, 'mb-3':true,'invalid':(newRooms.controls.rooms.hasError('required') || newRooms.controls.rooms.hasError('pattern')) && newRooms.touched}"
+          type="text" placeholder="Set Rooms" formControlName="rooms">
+           <input
+          [ngClass]="{'form-control':true, 'mb-3':true,'invalid':newRooms.controls.name.hasError('required') && newRooms.touched}"
+          type="text" placeholder="Set Name" formControlName="name">
+           <button [disabled]="newRooms.valid==false" type="button" class="btn btn-success w-100" (click)="newRoomsSubmit()">Submit</button>
+          </form>
+         }
+         @if(selectType=='listRooms'){
+          <form [formGroup]="listRooms" novalidate>
+           <select
+          [ngClass]="{'form-select':true,'form-select-md':true, 'mb-3':true,'invalid':listRooms.controls.rooms.hasError('required') && listRooms.touched}"
+          formControlName="rooms">
+            <option disabled hidden value="">Choose rooms ...</option>
+            @for (item of socketService.rooms; track $index) {
+             <option value="{{item}}">{{item}}</option>
+            }
+           </select>
+           <input
+          [ngClass]="{'form-control':true, 'mb-3':true,'invalid':listRooms.controls.name.hasError('required') && listRooms.touched}"
+          type="text" placeholder="Set Name" formControlName="name">
+           <button [disabled]="listRooms.valid==false" type="button" class="btn btn-success w-100" (click)="listRoomsSubmit()">Submit</button>
+          </form>
+         }
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
